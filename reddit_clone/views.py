@@ -6,6 +6,7 @@ from .serializers import SubredditSerializer, VoteSerializer
 from rest_framework import generics, permissions, status
 from rest_framework.response import Response
 from rest_framework.views import APIView
+from rest_framework.permissions import IsAuthenticated
 
 from reddit_clone import serializers
 
@@ -41,6 +42,7 @@ class SubredditDetailView(APIView):
 #         serialzer.save(voter=self.request.user, subreddit=Subreddit.objects.get(pk=self.kwargs['pk']))
 
 class VoteCreate(APIView):
+    permission_classes = [IsAuthenticated]
     def post(self, request, pk):
         user = self.request.user
         subreddit = Subreddit.objects.get(id=pk)
